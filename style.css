@@ -1,0 +1,78 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: #e8f4d9; /* Light green background similar to the banner */
+    text-align: center;
+    color: #5a7247; /* Darker green for text */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin-top: 100px;
+}
+
+h1 {
+    font-size: 3em;
+    animation: bounce 2s infinite;
+    color: #446631; /* Darker green for headings */
+}
+
+p {
+    font-size: 1.2em;
+}
+
+.cake-img {
+    width: 300px;
+    height: auto;
+    border-radius: 15px;
+    margin-top: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.notify-btn {
+    background: #d4a762; /* Golden color from the graduation cake */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1.2em;
+    margin-top: 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.notify-btn:hover {
+    background: #c09555; /* Slightly darker gold on hover */
+    transform: scale(1.1);
+}
+
+.countdown {
+    font-size: 1.5em;
+    margin: 20px 0;
+    color: #446631;
+    font-weight: bold;
+}
+
+/* Animations */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.fade-in {
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slide-in {
+    animation: slideIn 1.5s ease-in-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}

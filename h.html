@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon - The Cake Boutique</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+
+        :root {
+            --gold: #d4a762;
+            --light-gold: #e9cb9e;
+            --dark-gold: #b48a45;
+            --green: #e8f4d9;
+            --light-green: #f5f9ef;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            margin: 0;
+            padding: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--green),
+                var(--green) 15px,
+                var(--light-green) 15px,
+                var(--light-green) 30px
+            );
+            text-align: center;
+            color: var(--dark-gold);
+            overflow-x: hidden;
+            animation: backgroundShimmer 20s infinite linear;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, var(--light-gold), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 10;
+        }
+
+        .logo-container {
+            margin-bottom: 30px;
+            animation: floatAnimation 6s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            max-width: 220px;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(212, 167, 98, 0.3));
+            animation: glowPulse 4s infinite alternate;
+        }
+
+        .logo-border {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 250px;
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: expandBorder 2s ease-out forwards 0.5s, rotateBorder 20s linear infinite;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5em;
+            color: var(--dark-gold);
+            font-weight: 700;
+            margin-bottom: 30px;
+            animation: shimmerText 3s infinite, fadeInUp 1.5s ease-out;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            transform: translateX(-50%);
+            animation: expandLine 2s ease-out forwards 1.5s;
+        }
+
+        p.tagline {
+            font-size: 1.8em;
+            font-style: italic;
+            margin-bottom: 40px;
+            animation: fadeInRight 2s ease-out, floatText 5s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cake-img-container {
+            position: relative;
+            margin: 40px auto;
+            max-width: 600px;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            animation: fadeInZoom 1.5s ease-out;
+            z-index: 2;
+        }
+
+        .cake-img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            animation: float3D 8s ease-in-out infinite;
+        }
+        
+        .cake-img-container:hover .cake-img {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.25), 0 0 20px rgba(212, 167, 98, 0.4);
+        }
+
+        .countdown {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2em;
+            margin: 40px 0;
+            color: var(--dark-gold);
+            font-weight: bold;
+            animation: pulseAnimation 2s infinite alternate;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .countdown-label {
+            font-size: 0.5em;
+            display: inline-block;
+            vertical-align: top;
+            animation: fadeIn 3s;
+        }
+
+        .leaf-decoration {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards, wiggle 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 5px rgba(212, 167, 98, 0.3));
+            z-index: 1;
+        }
+
+        .leaf-top-left {
+            top: -40px;
+            left: -40px;
+            transform: rotate(-45deg);
+            animation-delay: 0.5s;
+        }
+
+        .leaf-top-right {
+            top: -40px;
+            right: -40px;
+            transform: rotate(45deg);
+            animation-delay: 1s;
+        }
+
+        .leaf-bottom-left {
+            bottom: -40px;
+            left: -40px;
+            transform: rotate(-135deg);
+            animation-delay: 1.5s;
+        }
+
+        .leaf-bottom-right {
+            bottom: -40px;
+            right: -40px;
+            transform: rotate(135deg);
+            animation-delay: 2s;
+        }
+
+        .decorative-line {
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 30px auto;
+            position: relative;
+            animation: expandWidth 2s ease-out forwards;
+            overflow: visible;
+            z-index: 1;
+        }
+
+        .decorative-line::after {
+            content: "✦";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--gold);
+            font-size: 20px;
+            opacity: 0;
+            animation: fadeInRotate 2s forwards 1s;
+        }
+
+        .sprinkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .sprinkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: fallingSprinkle 7s linear infinite;
+            filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.7));
+        }
+
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--gold);
+            opacity: 0.8;
+            top: -20px;
+            animation: confettiFall 10s ease-in infinite;
+        }
+
+        .background-bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bubble {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255,255,255,0.8), rgba(212,167,98,0.2));
+            border-radius: 50%;
+            animation: bubbleRise 15s infinite linear;
+            opacity: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 0.8; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from { 
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInZoom {
+            from { 
+                opacity: 0;
+                transform: scale(0.85);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 200px; }
+        }
+
+        @keyframes expandLine {
+            from { width: 0; }
+            to { width: 150px; }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-45deg) scale(1); }
+            25% { transform: rotate(-40deg) scale(1.05); }
+            75% { transform: rotate(-50deg) scale(0.95); }
+        }
+
+        @keyframes floatAnimation {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes floatText {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes float3D {
+            0%, 100% { transform: translateY(0) translateZ(0) rotate(0); }
+            25% { transform: translateY(-10px) translateZ(20px) rotate(0.5deg); }
+            75% { transform: translateY(5px) translateZ(-10px) rotate(-0.5deg); }
+        }
+
+        @keyframes pulseAnimation {
+            0% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+
+        @keyframes fallingSprinkle {
+            0% {
+                top: -5%;
+                left: var(--start-pos);
+                opacity: 0;
+                transform: rotate(0deg);
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                top: 105%;
+                left: calc(var(--start-pos) + var(--drift));
+                opacity: 0;
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes shimmerText {
+            0%, 100% { color: var(--dark-gold); }
+            50% { color: var(--gold); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(212, 167, 98, 0.3)); }
+            50% { filter: drop-shadow(0 0 15px rgba(212, 167, 98, 0.5)); }
+        }
+
+        @keyframes fadeInRotate {
+            0% { opacity: 0; transform: translate(-50%, -50%) rotate(0); }
+            100% { opacity: 1; transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes expandBorder {
+            0% { opacity: 0; transform: translateX(-50%) scale(0.5); }
+            100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+        }
+
+        @keyframes rotateBorder {
+            0% { transform: translateX(-50%) rotate(0); }
+            100% { transform: translateX(-50%) rotate(360deg); }
+        }
+
+        @keyframes sparkleAnimation {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1) rotate(180deg); opacity: 1; }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes confettiFall {
+            0% { 
+                top: -20px; 
+                opacity: 0;
+                transform: rotate(0deg);
+            }
+            10% {
+                opacity: 0.8;
+            }
+            100% { 
+                top: 100%; 
+                opacity: 0;
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes bubbleRise {
+            0% {
+                bottom: -100px;
+                opacity: 0;
+            }
+            10% {
+                opacity: var(--bubble-opacity);
+            }
+            100% {
+                bottom: 100%;
+                opacity: 0;
+            }
+        }
+
+        @keyframes backgroundShimmer {
+            0%, 100% {
+                background: repeating-linear-gradient(
+                    90deg,
+                    var(--green),
+                    var(--green) 15px,
+                    var(--light-green) 15px,
+                    var(--light-green) 30px
+                );
+            }
+            50% {
+                background: repeating-linear-gradient(
+                    90deg,
+                    var(--light-green),
+                    var(--light-green) 15px,
+                    var(--green) 15px,
+                    var(--green) 30px
+                );
+            }
+        }
+
+        /* SVG styles */
+        .leaf-svg {
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 2;
+            animation: strokeAnimate 4s infinite alternate;
+        }
+
+        @keyframes strokeAnimate {
+            0% { stroke-dasharray: 100; stroke-dashoffset: 100; }
+            100% { stroke-dasharray: 100; stroke-dashoffset: 0; }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            p.tagline {
+                font-size: 1.4em;
+            }
+            
+            .countdown {
+                font-size: 1.8em;
+            }
+            
+            .cake-img-container {
+                max-width: 90%;
+            }
+            
+            .leaf-decoration {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background bubbles -->
+    <div class="background-bubbles" id="bubbles"></div>
+    
+    <div class="container">
+        <!-- Confetti animation -->
+        <div class="confetti" id="confetti"></div>
+        
+        <div class="logo-container">
+            <div class="logo-border"></div>
+            <img src="logo.jpg" alt="The Cake Boutique" class="logo">
+        </div>
+        
+        <h1>Something Sweet is Coming Soon!</h1>
+        
+        <div class="decorative-line"></div>
+        
+        <p class="tagline">We're baking up something special just for you.</p>
+        
+        <div class="cake-img-container">
+            <!-- Decorative leaves using SVG -->
+            <svg class="leaf-decoration leaf-top-left" viewBox="0 0 100 100">
+                <path class="leaf-svg" d="M20,50 Q40,20 80,50 Q40,80 20,50 Z"></path>
+            </svg>
+            
+            <svg class="leaf-decoration leaf-top-right" viewBox="0 0 100 100">
+                <path class="leaf-svg" d="M20,50 Q40,20 80,50 Q40,80 20,50 Z"></path>
+            </svg>
+            
+            <img src="cake.jpg.png" alt="Delicious Cake" class="cake-img">
+            
+            <svg class="leaf-decoration leaf-bottom-left" viewBox="0 0 100 100">
+                <path class="leaf-svg" d="M20,50 Q40,20 80,50 Q40,80 20,50 Z"></path>
+            </svg>
+            
+            <svg class="leaf-decoration leaf-bottom-right" viewBox="0 0 100 100">
+                <path class="leaf-svg" d="M20,50 Q40,20 80,50 Q40,80 20,50 Z"></path>
+            </svg>
+            
+            <!-- Sprinkles animation container -->
+            <div class="sprinkles" id="sprinkles"></div>
+        </div>
+        
+        <div class="decorative-line"></div>
+        
+        <div class="countdown">
+            <p id="timer"></p>
+        </div>
+    </div>
+    
+    <script>
+        // Countdown Timer with improved styling
+        function countdown() {
+            let launchDate = new Date("June 1, 2025 00:00:00").getTime();
+            let x = setInterval(function() {
+                let now = new Date().getTime();
+                let timeLeft = launchDate - now;
+                
+                let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                document.getElementById("timer").innerHTML = 
+                    `<span>${days}<span class="countdown-label">days</span></span> : 
+                    <span>${hours}<span class="countdown-label">hours</span></span> : 
+                    <span>${minutes}<span class="countdown-label">mins</span></span> : 
+                    <span>${seconds}<span class="countdown-label">secs</span></span>`;
+                
+                if (timeLeft < 0) {
+                    clearInterval(x);
+                    document.getElementById("timer").innerHTML = "We're Live!";
+                }
+            }, 1000);
+        }
+        
+        // Generate falling sprinkles
+        function createSprinkles() {
+            const sprinklesContainer = document.getElementById('sprinkles');
+            const colors = ['#FF9AA2', '#FFB7B2', '#FFDAC1', '#E2F0CB', '#B5EAD7', '#d4a762'];
+            
+            for (let i = 0; i < 40; i++) {
+                const sprinkle = document.createElement('div');
+                sprinkle.classList.add('sprinkle');
+                
+                // Random properties
+                const size = Math.random() * 8 + 4;
+                const startPos = Math.random() * 100;
+                const drift = Math.random() * 60 - 30;
+                const delay = Math.random() * 8;
+                const duration = Math.random() * 4 + 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Apply styles
+                sprinkle.style.width = `${size}px`;
+                sprinkle.style.height = `${size}px`;
+                sprinkle.style.animationDelay = `${delay}s`;
+                sprinkle.style.animationDuration = `${duration}s`;
+                sprinkle.style.backgroundColor = color;
+                sprinkle.style.setProperty('--start-pos', `${startPos}%`);
+                sprinkle.style.setProperty('--drift', `${drift}%`);
+                
+                // Add to container
+                sprinklesContainer.appendChild(sprinkle);
+            }
+        }
+        
+        // Generate confetti
+        function createConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            const colors = ['#d4a762', '#e9cb9e', '#b48a45', '#FAF0E6', '#FFF8DC'];
+            const shapes = ['square', 'rectangle', 'circle', 'triangle'];
+            
+            for (let i = 0; i < 60; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti-piece');
+                
+                // Random properties
+                const size = Math.random() * 15 + 5;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 10;
+                const duration = Math.random() * 5 + 8;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                
+                // Apply styles
+                confetti.style.left = `${posX}%`;
+                confetti.style.width = `${shape === 'rectangle' ? size * 2 : size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.backgroundColor = color;
+                confetti.style.animationDelay = `${delay}s`;
+                confetti.style.animationDuration = `${duration}s`;
+                
+                // Shape variations
+                if (shape === 'circle') {
+                    confetti.style.borderRadius = '50%';
+                } else if (shape === 'triangle') {
+                    confetti.style.width = '0';
+                    confetti.style.height = '0';
+                    confetti.style.backgroundColor = 'transparent';
+                    confetti.style.borderLeft = `${size/2}px solid transparent`;
+                    confetti.style.borderRight = `${size/2}px solid transparent`;
+                    confetti.style.borderBottom = `${size}px solid ${color}`;
+                }
+                
+                // Add to container
+                confettiContainer.appendChild(confetti);
+            }
+        }
+        
+        // Generate rising bubbles
+        function createBubbles() {
+            const bubblesContainer = document.getElementById('bubbles');
+            
+            for (let i = 0; i < 30; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                // Random properties
+                const size = Math.random() * 80 + 20;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 10 + 15;
+                const opacity = Math.random() * 0.2 + 0.1;
+                
+                // Apply styles
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${posX}%`;
+                bubble.style.animationDelay = `${delay}s`;
+                bubble.style.animationDuration = `${duration}s`;
+                bubble.style.setProperty('--bubble-opacity', opacity);
+                
+                // Add to container
+                bubblesContainer.appendChild(bubble);
+            }
+        }
+        
+        // Create sparkles effect
+        function addSparkleEffect() {
+            document.addEventListener('mousemove', function(e) {
+                // Create sparkle at mouse position
+                if (Math.random() < 0.3) { // Only create sparkle 30% of the time for better performance
+                    const sparkle = document.createElement('div');
+                    sparkle.classList.add('sparkle');
+                    
+                    // Position at mouse
+                    sparkle.style.left = `${e.pageX}px`;
+                    sparkle.style.top = `${e.pageY}px`;
+                    
+                    // Random properties
+                    const size = Math.random() * 15 + 5;
+                    const duration = Math.random() * 1 + 1;
+                    
+                    // Apply styles
+                    sparkle.style.width = `${size}px`;
+                    sparkle.style.height = `${size}px`;
+                    sparkle.style.animation = `sparkleAnimation ${duration}s ease-out forwards`;
+                    
+                    // Add to body
+                    document.body.appendChild(sparkle);
+                    
+                    // Remove after animation completes
+                    setTimeout(() => {
+                        sparkle.remove();
+                    }, duration * 1000);
+                }
+            });
+        }
+        
+        // Initialize
+        window.onload = function() {
+            countdown();
+            createSprinkles();
+            createConfetti();
+            createBubbles();
+            addSparkleEffect();
+        };
+    </script>
+</body>
+</html>
